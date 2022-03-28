@@ -4,10 +4,7 @@ import Button from "@mui/material/Button";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import FormHelperText from "@mui/material/FormHelperText";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,22 +12,25 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import { TreeSelect } from "antd";
 
 const validationSchema = yup.object({
   name: yup.string("Enter your name").required("Name is required"),
-  selector: yup.string("Select Selector").required("Selector is required"),
-  agreement: yup.boolean().oneOf([true], "Must Accept Terms and Conditions"),
 });
 
 const EditModel = ({ open, handleClose, id }) => {
-  const [selectors, setSelectors] = useState([]);
-
+  const [selectorsdataFromApi, setSelectors] = useState([]);
+  const [treeValue, setTreeValue] = useState();
   const navigate = useNavigate();
+
+  const onChange = (value) => {
+    setTreeValue(value);
+  };
 
   const formik = useFormik({
     initialValues: {
       name: "",
-      selector: "",
+      selector: treeValue,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -71,7 +71,7 @@ const EditModel = ({ open, handleClose, id }) => {
           <DialogContent>
             <div id="field">
               <TextField
-                fullWidth
+                sx={{ width: 400 }}
                 id="name"
                 name="name"
                 label="Name"
@@ -83,32 +83,20 @@ const EditModel = ({ open, handleClose, id }) => {
                 {formik.touched.name && formik.errors.name}
               </FormHelperText>
             </div>
-            <div id="field">
-              <FormControl sx={{ width: 400 }}>
-                <InputLabel>Selectors</InputLabel>
-                <Select
-                  native
-                  id="selector"
-                  name="selector"
-                  label="Selector"
-                  value={formik.values.selector}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.selector && Boolean(formik.errors.selector)
-                  }
-                >
-                  <option aria-label="None" value="" />
-                  {selectors.map((selector) => (
-                    <option key={selector._id} value={selector._id}>
-                      {selector.selector}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormHelperText>
-                {formik.touched.selector && formik.errors.selector}
-              </FormHelperText>
-            </div>
+            <TreeSelect
+              id="selector"
+              name="selector"
+              value={formik.values.selector}
+              dropdownStyle={{ maxHeight: 400 }}
+              treeData={selectorsdataFromApi}
+              allowClear
+              showSearch
+              placeholder="Select Selector"
+              onChange={onChange}
+            />
+            <FormHelperText>
+              {formik.touched.selector && formik.errors.selector}
+            </FormHelperText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Back</Button>

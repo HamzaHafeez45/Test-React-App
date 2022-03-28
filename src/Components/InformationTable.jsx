@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Table from "./Table";
-import EditModel from "./model";
 import axios from "axios";
 
 const InformationForm = () => {
-  const [selectedId, setId] = useState("");
-  const [open, setOpen] = useState(false);
   const [fetchedData, setFetchedData] = useState([]);
-
-  const handleClickOpen = (_id, name) => {
-    setId(_id);
-
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const navigate = useNavigate();
 
   const Columns = [
     {
@@ -33,7 +22,7 @@ const InformationForm = () => {
     },
     {
       Header: "Selector",
-      accessor: "selector.selector",
+      accessor: "selector",
     },
     {
       accessor: "Edit",
@@ -44,7 +33,7 @@ const InformationForm = () => {
             color="primary"
             variant="contained"
             size="small"
-            onClick={() => handleClickOpen(record.row["original"]._id)}
+            onClick={() => navigate(`/editInfo/${record.row["original"]._id}`)}
           >
             Edit
           </Button>
@@ -56,7 +45,6 @@ const InformationForm = () => {
     const getData = async () => {
       const { data } = await axios.get("http://localhost:3000/api/information");
       setFetchedData(data);
-      console.log(data);
     };
     getData();
   }, []);
@@ -72,7 +60,6 @@ const InformationForm = () => {
           </Grid>
         </Box>
       </Container>
-      <EditModel open={open} handleClose={handleClose} id={selectedId} />
     </>
   );
 };

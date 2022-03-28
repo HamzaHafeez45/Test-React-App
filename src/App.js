@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import InformationForm from "./Components/InformationForm";
 import InformationTable from "./Components/InformationTable";
-import SectorForm from "./Components/SectorForm";
+import EditForm from "./Components/editInformation";
 import Welcome from "./Components/Welcome";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       <Route path="/" element={<Welcome />} />
       <Route path="/info" element={<InformationTable />} />
       <Route path="/addInfo" element={<InformationForm />} />
-      <Route path="/addSector" element={<SectorForm />} />
+      <Route path="/editInfo/:id" element={<EditForm />} />
     </Routes>
   );
 }

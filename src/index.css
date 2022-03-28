@@ -65,10 +65,6 @@ table th {
   direction: ltr;
 }
 
-/* mdl-demo is a custom classname to increases the specificity of our styles. It can be anything. 
- * The idea is that it is easy to extend/override builtin styles with very little effort.
- */
-
 .mdl-demo .dropdown-trigger > span:after {
   font-size: 12px;
   color: #555;
@@ -133,4 +129,23 @@ table th {
   font-weight: 400;
   src: url(https://fonts.gstatic.com/s/materialicons/v36/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
     format("woff2");
+}
+.search {
+  background: transparent;
+}
+.ant-tree-select {
+  width: 300px;
+  height: 55px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 0.1px solid grey;
+  box-sizing: border-box;
+  background: transparent !important;
+}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  height: 55px !important;
+  border-radius: 5px !important;
+  border: 0.1px solid grey !important;
+  background: transparent !important;
 }
