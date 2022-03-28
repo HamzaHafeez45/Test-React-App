@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 
@@ -12,6 +13,8 @@ const validationSchema = yup.object({
 });
 
 const SectorForm = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       selector: "",
@@ -24,6 +27,7 @@ const SectorForm = () => {
         })
         .then((response) => {
           toast("Success");
+          navigate("/");
         })
         .catch((error) => {
           toast(error);

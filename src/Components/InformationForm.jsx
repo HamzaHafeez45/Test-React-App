@@ -51,13 +51,6 @@ const Form = () => {
   });
 
   useEffect(() => {
-    formik.values = {
-      ...formik.values,
-      ...JSON.parse(window.localStorage.getItem("form-values")),
-    };
-  });
-
-  useEffect(() => {
     window.localStorage.setItem("form-values", JSON.stringify(formik.values));
   });
 
